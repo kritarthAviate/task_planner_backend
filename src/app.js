@@ -14,9 +14,9 @@ connectDB();
 app.use(helmet());
 
 app.use(
-  cors({
-    origin: process.env.NODE_ENV === "development" ? "*" : /domain\.com$/,
-  })
+    cors({
+        origin: process.env.NODE_ENV === "development" ? "*" : /domain\.com$/,
+    }),
 );
 
 app.use(bodyParser.json());
