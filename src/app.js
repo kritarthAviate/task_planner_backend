@@ -4,22 +4,20 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const { connectDB } = require("./db/mongoose");
+const userRouter = require("./routers/user");
+const app = express();
 
 dotenv.config();
-
-const app = express();
 
 connectDB();
 
 app.use(helmet());
 
-app.use(
-    cors({
-        origin: process.env.NODE_ENV === "development" ? "*" : /domain\.com$/,
-    }),
-);
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use("/user", userRouter);
 
 module.exports = app;
