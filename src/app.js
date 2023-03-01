@@ -10,16 +10,22 @@ const app = express();
 
 dotenv.config();
 
-connectDB();
+const corsOptions = {
+    credentials: true,
+    origin: true,
+    allowedHeaders: "content-type, origin, accept,",
+    methods: "GET,POST,PUT",
+};
 
+app.use(cors(corsOptions));
 app.use(helmet());
-
-app.use(cors());
 
 app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+connectDB();
 
 app.use("/user", userRouter);
 
