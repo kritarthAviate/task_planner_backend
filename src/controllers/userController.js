@@ -57,7 +57,7 @@ const signInController = async (req, res) => {
 
             const token = alreadyExistingUser.generateAuthToken();
 
-            res.status(200).json({ result: alreadyExistingUser, token });
+            res.cookie("authToken", token).status(200).json({ result: alreadyExistingUser, token });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
@@ -97,9 +97,9 @@ const signUpController = async (req, res) => {
             });
     } else {
         // normal auth with email and password
-        const { email, firstName, lastName, password, confirmPassword } = req.body;
+        const { email, firstName, lastName, password } = req.body;
         try {
-            if (!email || !firstName || !lastName || !password || !confirmPassword) {
+            if (!email || !firstName || !lastName || !password) {
                 throw new Error("Insufficient fields!");
             }
 
@@ -120,11 +120,18 @@ const signUpController = async (req, res) => {
 
             const token = result.generateAuthToken();
 
-            res.status(200).json({ result, token });
+            res.cookie("authToken", token).status(200).json({ result, token });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
     }
 };
 
-module.exports = { signInController, signUpController };
+const meController = async (req, res) => {
+    try {
+        if (req.user) res.status(200).json({ result: req.user });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+module.exports = { signInController, signUpController, meController };
