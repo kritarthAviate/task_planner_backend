@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const { connectDB } = require("./db/mongoose");
-const userRouter = require("./routers/user");
+const userRouter = require("./routers/User");
+const taskRouter = require("./routers/Tasks");
 const app = express();
 
 dotenv.config();
@@ -28,5 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 connectDB();
 
 app.use("/user", userRouter);
+app.use("/task", taskRouter);
 
 module.exports = app;
