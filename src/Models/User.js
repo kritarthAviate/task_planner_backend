@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+
 const userSchema = new mongoose.Schema(
     {
         firstName: {
@@ -21,6 +22,18 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
+        tasks: [
+            {
+                value: {
+                    type: String,
+                    required: true,
+                },
+                nestingValue: {
+                    type: Number,
+                    required: true,
+                },
+            },
+        ],
     },
     { timestamps: true },
 );
