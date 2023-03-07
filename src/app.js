@@ -11,23 +11,22 @@ const app = express();
 
 dotenv.config();
 
+// Middlewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(helmet());
 const corsOptions = {
     credentials: true,
     origin: true,
     allowedHeaders: "content-type, origin, accept,",
     methods: "GET,POST,PUT",
 };
-
 app.use(cors(corsOptions));
-app.use(helmet());
-
-app.use(cookieParser());
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 connectDB();
 
+// Routes
 app.use("/user", userRouter);
 app.use("/task", taskRouter);
 
