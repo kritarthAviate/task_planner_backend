@@ -57,7 +57,12 @@ const signInController = async (req, res) => {
 
             const token = alreadyExistingUser.generateAuthToken();
 
-            return res.cookie("authToken", token).json({ result: alreadyExistingUser });
+            return res
+                .cookie("authToken", token, {
+                    sameSite: "none",
+                    secure: true,
+                })
+                .json({ result: alreadyExistingUser });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
