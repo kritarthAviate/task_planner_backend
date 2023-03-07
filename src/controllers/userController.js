@@ -29,7 +29,7 @@ const signInController = async (req, res) => {
 
                 const token = result.generateAuthToken();
 
-                res.status(200).json({ result, token });
+                res.cookie("authToken", token).status(200).json({ result });
             })
             .catch(err => {
                 res.status(400).json({ message: err.message });
@@ -57,7 +57,7 @@ const signInController = async (req, res) => {
 
             const token = alreadyExistingUser.generateAuthToken();
 
-            res.status(200).json({ result: alreadyExistingUser, token });
+            return res.cookie("authToken", token).json({ result: alreadyExistingUser });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
@@ -90,7 +90,7 @@ const signUpController = async (req, res) => {
 
                 const token = result.generateAuthToken();
 
-                res.status(200).json({ result, token });
+                res.cookie("authToken", token).status(200).json({ result });
             })
             .catch(err => {
                 res.status(400).json({ message: err.message });
@@ -120,7 +120,7 @@ const signUpController = async (req, res) => {
 
             const token = result.generateAuthToken();
 
-            res.cookie("authToken", token).status(200).json({ result, token });
+            res.cookie("authToken", token).status(200).json({ result });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
